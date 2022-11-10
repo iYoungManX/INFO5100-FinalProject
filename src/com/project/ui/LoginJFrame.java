@@ -26,19 +26,26 @@ public class LoginJFrame extends JFrame implements MouseListener {
 
     //The right auth code
     JLabel rightCode = new JLabel();
-
-
     public LoginJFrame() {
         //init the frame
         initJFrame();
-
         //add content to the frame
         initView();
-
-
         //show
         this.setVisible(true);
+
     }
+
+
+    public void initJFrame() {
+        this.setSize(488, 430);
+        this.setTitle("The Puzzle Game V1.0 Login");
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setAlwaysOnTop(true);
+        this.setLayout(null);
+    }
+
 
     public void initView() {
         //1. add user name
@@ -113,15 +120,7 @@ public class LoginJFrame extends JFrame implements MouseListener {
     }
 
 
-    public void initJFrame() {
-        this.setSize(488, 430);
-        this.setTitle("The Puzzle Game V1.0 Login");
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setAlwaysOnTop(true);
-        this.setLayout(null);
-    }
-
+ 
 
 
     //Click
@@ -156,7 +155,7 @@ public class LoginJFrame extends JFrame implements MouseListener {
                 System.out.println("Game Starting ....");
                 //Close the current login page
                 // Open the main page 
-    
+                this.setVisible(false);
                 new GameJFrame();
             } else {
                 System.out.println("incorrect username or password");
@@ -164,6 +163,7 @@ public class LoginJFrame extends JFrame implements MouseListener {
             }
         } else if (e.getSource() == register) {
             System.out.println("click the register button");
+            this.setVisible(false);
             new RegisterJFrame();
 
         } else if (e.getSource() == rightCode) {
@@ -191,8 +191,6 @@ public class LoginJFrame extends JFrame implements MouseListener {
         JLabel warning = new JLabel(content);
         warning.setBounds(50, 0, 200, 150);
         jDialog.getContentPane().add(warning);
-
-      
         jDialog.setVisible(true);
     }
 

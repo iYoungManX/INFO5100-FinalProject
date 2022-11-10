@@ -22,7 +22,7 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
     int y = 0;
 
     //Define a variable to record the path of the currently displayed image
-    String path = "/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/animal/animal7/";
+    String path = "image/animal/animal7/";
 
     //Define a two-dimensional array that stores the correct data
     int[][] win = {
@@ -102,13 +102,13 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
 
         if (victory()) {
             //Showing victory icon
-            JLabel winJLabel = new JLabel(new ImageIcon("/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/win.png"));
-            winJLabel.setBounds(203,283,197,73);
+            JLabel winJLabel = new JLabel(new ImageIcon("image/win.png"));
+            winJLabel.setBounds(203,283,400,200);
             this.getContentPane().add(winJLabel);
         }
 
 
-        JLabel stepCount = new JLabel("步数：" + step);
+        JLabel stepCount = new JLabel("steps" + step);
         stepCount.setBounds(50,30,100,20);
         this.getContentPane().add(stepCount);
 
@@ -130,7 +130,7 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
 
 
         //Add background picture
-        JLabel background = new JLabel(new ImageIcon("/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/background.png"));
+        JLabel background = new JLabel(new ImageIcon("image/background.png"));
         background.setBounds(40, 40, 508, 560);
         this.getContentPane().add(background);
 
@@ -200,7 +200,7 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
             JLabel all = new JLabel(new ImageIcon(path + "all.jpg"));
             all.setBounds(83,134,420,420);
             this.getContentPane().add(all);
-            JLabel background = new JLabel(new ImageIcon("/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/background.png"));
+            JLabel background = new JLabel(new ImageIcon("image/background.png"));
             background.setBounds(40, 40, 508, 560);
             this.getContentPane().add(background);
             //Refresh
@@ -331,7 +331,7 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
 
             //Create a dialog object
             JDialog jDialog = new JDialog();
-            JLabel jLabel = new JLabel(new ImageIcon("/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/about.png"));
+            JLabel jLabel = new JLabel(new ImageIcon("image/about.png"));
             jLabel.setBounds(0,0,258,258);
             //Add the QR code to the dialog
             jDialog.getContentPane().add(jLabel);
