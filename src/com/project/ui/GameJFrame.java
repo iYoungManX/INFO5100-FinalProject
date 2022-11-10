@@ -1,5 +1,7 @@
 package com.project.ui;
 
+import com.project.ui.LoginJFrame;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.event.ActionEvent;
@@ -10,28 +12,19 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class GameJFrame extends JFrame implements KeyListener,ActionListener{
-    //JFrame 界面，窗体
-    //子类呢？也表示界面，窗体
-    //规定：GameJFrame这个界面表示的就是游戏的主界面
-    //以后跟游戏相关的所有逻辑都写在这个类中
-
-    //创建一个二维数组
-    //目的：用来管理数据
-    //加载图片的时候，会根据二维数组中的数据进行加载
+    //GameJFrame is the mian frame of this game
+    //Create a two-dimensional array for data storage
+    //When loading a picture, it will be loaded according to the data in the two-dimensional array
     int[][] data = new int[4][4];
 
-    //记录空白方块在二维数组中的位置
+    //Record the position of the blank square in a 2D array
     int x = 0;
     int y = 0;
 
-    //定义一个变量，记录当前展示图片的路径
-    String path = "puzzlegame/image/animal/animal3/";
+    //Define a variable to record the path of the currently displayed image
+    String path = "/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/animal/animal7/";
 
-
-
-
-
-    //定义一个二维数组，存储正确的数据
+    //Define a two-dimensional array that stores the correct data
     int[][] win = {
             {1,2,3,4},
             {5,6,7,8},
@@ -39,66 +32,58 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
             {13,14,15,0}
     };
 
-    //定义变量用来统计步数
+    //Define variables to count steps
     int step = 0;
 
 
-    //创建选项下面的条目对象
-    JMenuItem replayItem = new JMenuItem("重新游戏");
-    JMenuItem reLoginItem = new JMenuItem("重新登录");
-    JMenuItem closeItem = new JMenuItem("关闭游戏");
+    //Create an object for dropdown menu options
+    JMenuItem replayItem = new JMenuItem("Restart Game");
+    JMenuItem reLoginItem = new JMenuItem("Change A User");
+    JMenuItem closeItem = new JMenuItem("Close Game");
 
-    JMenuItem accountItem = new JMenuItem("公众号");
+    JMenuItem accountItem = new JMenuItem("Donate");
 
 
     public GameJFrame() {
-        //初始化界面
+        //Initialize the interface
         initJFrame();
 
-        //初始化菜单
+        //Initialize the menu
         initJMenuBar();
 
 
-        //初始化数据（打乱）
+        //Initialize data (shuffle)
         initData();
 
-        //初始化图片（根据打乱之后的结果去加载图片）
+        //Initialize the picture (load the picture according to the result of the shuffle)
         initImage();
 
-        //让界面显示出来，建议写在最后
+        //Display the interface
         this.setVisible(true);
 
     }
 
 
-    //初始化数据（打乱）
+    //Initialize data (shuffle)
     private void initData() {
-        //1.定义一个一维数组
+        //1.Define a one-dimensional array
         int[] tempArr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-        //2.打乱数组中的数据的顺序
-        //遍历数组，得到每一个元素，拿着每一个元素跟随机索引上的数据进行交换
+        //2.Shuffle the order of data in this array
+        //Traverse the array, get each element
+        //and exchange each element with the data on the machine index
         Random r = new Random();
         for (int i = 0; i < tempArr.length; i++) {
-            //获取到随机索引
+            //get random index
             int index = r.nextInt(tempArr.length);
-            //拿着遍历到的每一个数据，跟随机索引上的数据进行交换
+            //Take each data traversed and exchange it with the data on the machine index
             int temp = tempArr[i];
             tempArr[i] = tempArr[index];
             tempArr[index] = temp;
         }
 
-        /*
-        *
-        *           5   6   8   9
-        *           10  11  15  1
-        *           4   7   12  13
-        *           2   3   0  14
-        *
-        *           5   6   8   9   10  11  15  1   4   7   12  13  2   3   0   14
-        * */
-
-        //4.给二维数组添加数据
-        //遍历一维数组tempArr得到每一个元素，把每一个元素依次添加到二维数组当中
+        //4.Add data to a two-dimensional array
+        //Traverse the one-dimensional array tempArr to get each element,
+        //and add each element to the two-dimensional array in turn
         for (int i = 0; i < tempArr.length; i++) {
             if (tempArr[i] == 0) {
                 x = i / 4;
@@ -108,16 +93,16 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
         }
     }
 
-    //初始化图片
-    //添加图片的时候，就需要按照二维数组中管理的数据添加图片
+    //initialize the image
+    //When adding pictures, you need to add pictures according to the data managed in the two-dimensional array
     private void initImage() {
 
-        //清空原本已经出现的所有图片
+        //Clear all pictures that have already appeared
         this.getContentPane().removeAll();
 
         if (victory()) {
-            //显示胜利的图标
-            JLabel winJLabel = new JLabel(new ImageIcon("puzzlegame/image/win.png"));
+            //Showing victory icon
+            JLabel winJLabel = new JLabel(new ImageIcon("/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/win.png"));
             winJLabel.setBounds(203,283,197,73);
             this.getContentPane().add(winJLabel);
         }
@@ -127,95 +112,74 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
         stepCount.setBounds(50,30,100,20);
         this.getContentPane().add(stepCount);
 
-
-        //路径分为两种：
-        //绝对路径：一定是从盘符开始的。C:\  D：\
-        //相对路径：不是从盘符开始的
-        //相对路径相对当前项目而言的。 aaa/bbb
-        //在当前项目下，去找aaa文件夹，里面再找bbb文件夹。
-
-        //细节：
-        //先加载的图片在上方，后加载的图片塞在下面。
-        //外循环 --- 把内循环重复执行了4次。
+        //The image loaded first is at the top, and the image loaded later is tucked below.
         for (int i = 0; i < 4; i++) {
-            //内循环 --- 表示在一行添加4张图片
             for (int j = 0; j < 4; j++) {
-                //获取当前要加载图片的序号
+                //Get the serial number of the current image to be loaded
                 int num = data[i][j];
-                //创建一个JLabel的对象（管理容器）
+                //Create a JLabel object (manage container)
                 JLabel jLabel = new JLabel(new ImageIcon(path + num + ".jpg"));
-                //指定图片位置
                 jLabel.setBounds(105 * j + 83, 105 * i + 134, 105, 105);
-                //给图片添加边框
-                //0:表示让图片凸起来
-                //1：表示让图片凹下去
+                //add a border to the image
+                //0: Indicates that the raised picture
+                //1: Indicates that the concave picture
                 jLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
-                //把管理容器添加到界面中
                 this.getContentPane().add(jLabel);
             }
         }
 
 
-        //添加背景图片
-        JLabel background = new JLabel(new ImageIcon("puzzlegame/image/background.png"));
+        //Add background picture
+        JLabel background = new JLabel(new ImageIcon("/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/background.png"));
         background.setBounds(40, 40, 508, 560);
-        //把背景图片添加到界面当中
         this.getContentPane().add(background);
 
 
-        //刷新一下界面
+        //Refresh the interface
         this.getContentPane().repaint();
 
 
     }
 
     private void initJMenuBar() {
-        //创建整个的菜单对象
+        //Create the entire menu object
         JMenuBar jMenuBar = new JMenuBar();
-        //创建菜单上面的两个选项的对象 （功能  关于我们）
-        JMenu functionJMenu = new JMenu("功能");
-        JMenu aboutJMenu = new JMenu("关于我们");
+        //Create two options on the menu
+        JMenu functionJMenu = new JMenu("Functions");
+        JMenu aboutJMenu = new JMenu("Support Us");
 
-
-
-        //将每一个选项下面的条目天极爱到选项当中
         functionJMenu.add(replayItem);
         functionJMenu.add(reLoginItem);
         functionJMenu.add(closeItem);
 
         aboutJMenu.add(accountItem);
 
-        //给条目绑定事件
+        //Add events to items
         replayItem.addActionListener(this);
         reLoginItem.addActionListener(this);
         closeItem.addActionListener(this);
         accountItem.addActionListener(this);
 
-        //将菜单里面的两个选项添加到菜单当中
+        //Add function menu and about menu
         jMenuBar.add(functionJMenu);
         jMenuBar.add(aboutJMenu);
 
-
-
-
-        //给整个界面设置菜单
         this.setJMenuBar(jMenuBar);
     }
 
     private void initJFrame() {
-        //设置界面的宽高
+        //Set the width and height of the interface
         this.setSize(603, 680);
-        //设置界面的标题
-        this.setTitle("拼图单机版 v1.0");
-        //设置界面置顶
+        //Set the title of the interface
+        this.setTitle("Puzzle Game ™️️");
+        //Set the interface to the top
         this.setAlwaysOnTop(true);
-        //设置界面居中
+        //Center the interface
         this.setLocationRelativeTo(null);
-        //设置关闭模式
+        //Set close mode
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //取消默认的居中放置，只有取消了才会按照XY轴的形式添加组件
         this.setLayout(null);
-        //给整个界面添加键盘监听事件
+        //Add keyboard listener events to the entire interface
         this.addKeyListener(this);
 
     }
@@ -225,102 +189,92 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
 
     }
 
-    //按下不松时会调用这个方法
+    //Hot key
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
         if (code == 65){
-            //把界面中所有的图片全部删除
+            //Delete all pictures in the interface
             this.getContentPane().removeAll();
-            //加载第一张完整的图片
+            //Load the correct picture
             JLabel all = new JLabel(new ImageIcon(path + "all.jpg"));
             all.setBounds(83,134,420,420);
             this.getContentPane().add(all);
-            //加载背景图片
-            //添加背景图片
-            JLabel background = new JLabel(new ImageIcon("puzzlegame/image/background.png"));
+            JLabel background = new JLabel(new ImageIcon("/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/background.png"));
             background.setBounds(40, 40, 508, 560);
-            //把背景图片添加到界面当中
             this.getContentPane().add(background);
-            //刷新界面
+            //Refresh
             this.getContentPane().repaint();
 
 
         }
     }
 
-    //松开按键的时候会调用这个方法
+    //Check victory
     @Override
     public void keyReleased(KeyEvent e) {
-        //判断游戏是否胜利，如果胜利，此方法需要直接结束，不能再执行下面的移动代码了
         if(victory()){
-            //结束方法
             return;
         }
-        //对上，下，左，右进行判断
-        //左：37 上：38 右：39 下：40
+        //Check up, down, left, right
+        //left：37 up：38 right：39 down：40
         int code = e.getKeyCode();
         System.out.println(code);
         if (code == 37) {
-            System.out.println("向左移动");
+            System.out.println("Left");
             if(y == 3){
                 return;
             }
-            //逻辑：
-            //把空白方块右方的数字往左移动
+            //Move the number to the right of the blank square to the left
             data[x][y] = data[x][y + 1];
             data[x][y + 1] = 0;
             y++;
-            //每移动一次，计数器就自增一次。
+            //The counter is incremented every time it moves
             step++;
-            //调用方法按照最新的数字加载图片
             initImage();
 
         } else if (code == 38) {
-            System.out.println("向上移动");
+            System.out.println("Up");
             if(x == 3){
-                //表示空白方块已经在最下方了，他的下面没有图片再能移动了
+                //Indicates that the blank square is already at the bottom,
+                //and there is no picture below him that can be moved.
                 return;
             }
-            //逻辑：
-            //把空白方块下方的数字往上移动
-            //x，y  表示空白方块
-            //x + 1， y 表示空白方块下方的数字
-            //把空白方块下方的数字赋值给空白方块
+            //Move the number below the blank square up
+            //x, y represent blank squares
+            //x + 1, y is the number below the blank square
+            //Assign the number below the blank square to the blank square
             data[x][y] = data[x + 1][y];
             data[x + 1][y] = 0;
             x++;
-            //每移动一次，计数器就自增一次。
+            //The counter is incremented every time it moves
             step++;
-            //调用方法按照最新的数字加载图片
             initImage();
         } else if (code == 39) {
-            System.out.println("向右移动");
+            System.out.println("Right");
             if(y == 0){
                 return;
             }
             //逻辑：
-            //把空白方块左方的数字往右移动
+            //Move the number on the left of the blank square to the right
             data[x][y] = data[x][y - 1];
             data[x][y - 1] = 0;
             y--;
-            //每移动一次，计数器就自增一次。
+            //The counter is incremented every time it moves
             step++;
-            //调用方法按照最新的数字加载图片
             initImage();
         } else if (code == 40) {
-            System.out.println("向下移动");
+            System.out.println("Down");
             if(x == 0){
                 return;
             }
-            //逻辑：
-            //把空白方块上方的数字往下移动
+
+            //Move the number above the blank square to down
             data[x][y] = data[x - 1][y];
             data[x - 1][y] = 0;
             x--;
-            //每移动一次，计数器就自增一次。
+            //The counter is incremented every time it moves
             step++;
-            //调用方法按照最新的数字加载图片
             initImage();
         }else if(code == 65){
             initImage();
@@ -336,66 +290,61 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
     }
 
 
-    //判断data数组中的数据是否跟win数组中相同
-    //如果全部相同，返回true。否则返回false
+    // Check whether the data in the data array is the same as the win array
+    //If all are the same, return true. else return false
     public boolean victory(){
         for (int i = 0; i < data.length; i++) {
-            //i : 依次表示二维数组 data里面的索引
-            //data[i]：依次表示每一个一维数组
             for (int j = 0; j < data[i].length; j++) {
                 if(data[i][j] != win[i][j]){
-                    //只要有一个数据不一样，则返回false
                     return false;
                 }
             }
         }
-        //循环结束表示数组遍历比较完毕，全都一样返回true
         return true;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //获取当前被点击的条目对象
+        //Get the currently clicked item object
         Object obj = e.getSource();
-        //判断
+
         if(obj == replayItem){
-            System.out.println("重新游戏");
-            //计步器清零
+            System.out.println("Restart the Game");
+            //Reset step
             step = 0;
-            //再次打乱二维数组中的数据
+            //Shuffle the data in the 2D array again
             initData();
-            //重新加载图片
+            //reload figure
             initImage();
         }else if(obj == reLoginItem){
-            System.out.println("重新登录");
-            //关闭当前的游戏界面
+            System.out.println("Change User");
+            //Close the current game interface
             this.setVisible(false);
-            //打开登录界面
+            //Open the login interface
             new LoginJFrame();
         }else if(obj == closeItem){
-            System.out.println("关闭游戏");
-            //直接关闭虚拟机即可
+            System.out.println("Close Game");
+            //Shut down the virtual machine directly
             System.exit(0);
         }else if(obj == accountItem){
-            System.out.println("公众号");
+            System.out.println("Donate");
 
-            //创建一个弹框对象
+            //Create a dialog object
             JDialog jDialog = new JDialog();
-            //创建一个管理图片的容器对象JLabel
-            JLabel jLabel = new JLabel(new ImageIcon("puzzlegame/image/about.png"));
-            //设置位置和宽高
+            JLabel jLabel = new JLabel(new ImageIcon("/Users/yuhao/Documents/neuclass/info5100/puzzlegame/image/about.png"));
             jLabel.setBounds(0,0,258,258);
-            //把图片添加到弹框当中
+            //Add the QR code to the dialog
             jDialog.getContentPane().add(jLabel);
-            //给弹框设置大小
+            //Set size
             jDialog.setSize(344,344);
-            //让弹框置顶
+            //Top Dialog
             jDialog.setAlwaysOnTop(true);
-            //让弹框居中
+            //Center Dialog
             jDialog.setLocationRelativeTo(null);
-            //弹框不关闭则无法操作下面的界面
+            //If the pop-up box is not closed,
+            // the following opreations are banned
             jDialog.setModal(true);
-            //让弹框显示出来
+            //Show dialog
             jDialog.setVisible(true);
         }
     }
