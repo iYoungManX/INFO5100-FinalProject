@@ -29,7 +29,7 @@ public class RegisterJFrame extends JFrame implements MouseListener {
     }
 
     public void initJFrame() {
-        this.setSize(488, 500);
+        this.setSize(470, 420);
         this.setTitle("Register");
         this.setAlwaysOnTop(true);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

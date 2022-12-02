@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="INFO5100-FinalProject:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/INFO5100_FinalProject_jar</output-path>
+    <root id="archive" name="INFO5100-FinalProject.jar">
+      <element id="module-output" name="INFO5100-FinalProject" />
+    </root>
+  </artifact>
+</component>

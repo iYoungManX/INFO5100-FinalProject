@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -22,7 +23,9 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
     int y = 0;
 
     //Define a variable to record the path of the currently displayed image
-    String path = "image/animal/animal7/";
+    String path = "image/game/animal4/";
+
+
 
     //Define a two-dimensional array that stores the correct data
     int[][] win = {
@@ -97,6 +100,8 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
     //When adding pictures, you need to add pictures according to the data managed in the two-dimensional array
     private void initImage() {
 
+        //System.out.println(path);
+
         //Clear all pictures that have already appeared
         this.getContentPane().removeAll();
 
@@ -108,7 +113,7 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
         }
 
 
-        JLabel stepCount = new JLabel("steps" + step);
+        JLabel stepCount = new JLabel("steps: " + step);
         stepCount.setBounds(50,30,100,20);
         this.getContentPane().add(stepCount);
 
@@ -310,10 +315,21 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
 
         if(obj == replayItem){
             System.out.println("Restart the Game");
+
             //Reset step
             step = 0;
             //Shuffle the data in the 2D array again
             initData();
+            Random r = new Random();
+            int animal = r.nextInt(8)+1;
+            int sports = r.nextInt(10)+1;
+            if(r.nextInt()>0){
+                path ="image/game/animal"+ animal+"/";
+            }else{
+                path ="image/game/sport"+ sports+"/";
+            }
+
+
             //reload figure
             initImage();
         }else if(obj == reLoginItem){
