@@ -348,11 +348,11 @@ public class GameJFrame extends JFrame implements KeyListener,ActionListener{
             //Create a dialog object
             JDialog jDialog = new JDialog();
             JLabel jLabel = new JLabel(new ImageIcon("image/about.png"));
-            jLabel.setBounds(0,0,258,258);
+            jLabel.setBounds(0,0,350,350);
             //Add the QR code to the dialog
             jDialog.getContentPane().add(jLabel);
             //Set size
-            jDialog.setSize(344,344);
+            jDialog.setSize(400,400);
             //Top Dialog
             jDialog.setAlwaysOnTop(true);
             //Center Dialog
