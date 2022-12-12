@@ -7,7 +7,7 @@ public class CodeUtil {
 
     public static String getCode(){
 
-        ArrayList<Character> list = new ArrayList<>();//52  索引的范围：0 ~ 51
+        ArrayList<Character> list = new ArrayList<>();//52  index range：0 ~ 51
 
         for (int i = 0; i < 26; i++) {
             list.add((char)('a' + i));//a - z
@@ -24,7 +24,7 @@ public class CodeUtil {
             char c = list.get(randomIndex);
             result = result + c;
         }
-        //System.out.println(result);//长度为4的随机字符串
+        //System.out.println(result);//
 
 
         int number = r.nextInt(10);
